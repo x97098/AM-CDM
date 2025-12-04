@@ -41,6 +41,21 @@ The AM-CDM is currently AM process-agnostic, meaning that it does not include AM
 
 ## How to use the AM-CDM - Lead: Richard Huff, supporting Benjamin Standfield (All contribute ideas?)
 
+The Common Data Model can be adopted into a variety of situations where the Additive Manufacturing data is being collected in accordance with FAIR principles (Findable, Accessible, Interoperable, and Repeatable).  Some example users include powder manufacturers, AM system OEMs, and coupon testing houses.  While there are certainly use cases that will depend on and utilize a full implementation of the data model, each of the examples above may only be interested in a subset of data.  The benefits of each group adopting the CDM are twofold.  First, they ensure their data internally follows best practices.  Second, they can communicate that data to each other or a larger project.
+When referencing the SADL files, Classes are sets of things (or data object types), such as PlannedProcessStep in the below diagram, and Properties are attributes or relationships of those things.  Properties therefore generally connect the data objects.  There are several considerations for individuals to adopt all or a portion of the CDM in a way that adds value to the dataset:
+
+### Required Properties/Classes:
+There are several classes in the CDM .sadl files that contain minimum required properties to establish the data object, usually defined as a name or ID.  These properties must be both unique and common across all implementations of the dataset.  In many cases, these unique IDs are essential in collating datasets gathered from multiple sources.  For example, a test house communicating the results of testing is not necessarily aware of the specimenProcessHistory, but including the specimenID attribute will allow for the Specimen class to link up with the ProcessHistory class.
+Other required properties could be ones that establish the relationship.  Their required status depends on the use case and the role of the person or organization that is representing the data.  For example, if the dataset contains both Specimen and ProcessHistory classes, the link that connects them is the specimenProcessHistory property in the Specimen class.  This link is established by referencing the specimenID in the previous example, but ultimately it is the property that creates a pedigree between the data objects.  In this example the classes being linked are considered neighbors.
+Finally, there are cases where an entire class, along with ID and relationship properties, is required to connect two non-neighboring classes.  If both Specimen and PowderStock classes are being used to communicate data, the link between them is the ProcessHistory class.  Like the first example above, an ID can be utilized on each of these objects as a reference to collate the dataset.  However, as in the second example, if the person or organization is responsible for collating the dataset then the specimenProcessHistory is also required to link the Specimen.  The link between ProcessHistory and PowderStock is a bit more complicated and follows the diagram in Figure 1.
+<img width="975" height="479" alt="image" src="https://github.com/user-attachments/assets/ce99a0b7-3ba4-46db-84a3-b14b6330d350" />
+![Figure 1]([image-url](https://github.com/user-attachments/assets/ce99a0b7-3ba4-46db-84a3-b14b6330d350) "CDM use-case linking a PowderStock class object to a Specimen class object.  Red boxes indicate parent classes and light blue boxes indicate required name/ID properties.")
+ 
+Figure 1 - CDM use-case linking a PowderStock class object to a Specimen class object.  Red boxes indicate parent classes and light blue boxes indicate required name/ID properties.
+
+### Parent Classes
+Many elements in the CDM are defined as subclasses (ie., ManufacturingProcessStep is a type of PlannedProcessStep).  In these cases, the required ID/name properties should be in the parent class.  However, reference properties can exist in either the parent or child.  Child classes inherit all properties from the parent and replaces the parent in the data model when utilized.  In the example above, the PlannedProcessStep class is not required since ManufacturingProcessStep is being used instead.  
+
 ### What is the use case for a general AM practitioner?
 ### How a non-data person may apply the CDM in their organization, even if not implemented in a database, etc.
 ### Minimum viable data, enable data pedigree via data connectivity
@@ -99,9 +114,9 @@ America Makes Community - Several projects within the America Makes community ha
   1. CORE Data Repository - A project led by The Penn State Applied Research Lab and supported by Edison Welding Institute (EWI) has adopted the AM-CDM as the foundation for the data model that will be employed by the CORE Project Data Repository. A proof-of-concept has been completed and remains to be implemented on CORE. This project has also produced an AM-CDM compliant data template that is currently available on the CORE Data Repository to America Makes members: <a href="https://core.americamakes.us/deliverables/overview/cd6ef85c-e9a6-4ac3-8fa9-005d7d78d040" target="_blank">CORE Data Template Available Here</a>
   2. Colorado School of Mines – Cross Platform Consistency Project - Focused on curating mechanical properties of Inconel 718 (IN718) produced on PBF-LB systems. This project aims to establish cross-platform processing pedigree strategies, conduct tensile property testing, characterize mechanical behavior of PBF-LB materials, assess the impact of process parameters, machine features, and feedstock, evaluate heat treatment effects, and recommend test methods and data standards for qualification.
 *How is CSOM using the AM-CDM?*
-  3. Boeing – GAMAT Project - The "Generation of Additive Material Allowables for Ti-6Al-4V" aims to create a standardized, statistical method for deriving bulk material properties using L-DED (Laser Powder Feed Directed Energy Deposition). GAMAT is using Hexagon's Material Center softaware to capture AM process data, which has been mapped to the AM-CDM.
+  3. Boeing – GAMAT Project - The "Generation of Additive Material Allowables for Ti-6Al-4V" aims to create a standardized, statistical method for deriving bulk material properties using L-DED (Laser Powder Feed Directed Energy Deposition). GAMAT is using Hexagon's MaterialCenter softaware to capture AM process data, which has been mapped to the AM-CDM.
 
-AFRL – HyperThought is integrating with Materials Center and is employing the AM-CDM 
+AFRL – HyperThought is integrating with MaterialCenter and is employing the AM-CDM 
 
 *(Presentation link)*
 
