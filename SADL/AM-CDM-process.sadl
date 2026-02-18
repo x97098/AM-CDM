@@ -6,6 +6,7 @@ ProcessHistory (note "(Elucidation) A history is a process that is the sum of th
 	described by historyProcessStep (note "Sequence of events performed.") with values of type PlannedProcessStep.
 
 PlannedProcessStep (note "a process that is planned") is a class,
+	described by processID (note 'Unique identifier for the process.') with a single value of type string,
 	described by processName (note 'Human readable name which designates this process step.') with a single value of type string,
 	described by processSequenceNumber (note "Sequence identifier of processing steps in chronological order.") with a single value of type int,
 	described by processPersonnel with values of type Person,
